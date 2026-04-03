@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{pifont}
+
+\begin{document}
+
+\section{Tổng quan Dữ liệu (Executive Summary)}
+Bộ dữ liệu bao gồm \textbf{14,640} lượt tweet nhắc đến 6 hãng hàng không lớn tại Mỹ: United, US Airways, American, Southwest, Delta, và Virgin America. 
+
+Phân tích tổng thể cho thấy khách hàng trên Twitter có xu hướng phàn nàn nhiều hơn là khen ngợi. Tỷ lệ phân bổ cảm xúc như sau:
+\begin{itemize}
+    \item \textbf{Tiêu cực (Negative):} 9,178 tweets (~62.7\%)
+    \item \textbf{Trung lập (Neutral):} 3,099 tweets (~21.2\%)
+    \item \textbf{Tích cực (Positive):} 2,363 tweets (~16.1\%)
+\end{itemize}
+
+\section{Xếp hạng Cảm xúc theo Thương hiệu (Brand Sentiment Ranking)}
+Việc nhìn vào số lượng tweet tuyệt đối có thể gây hiểu lầm do quy mô khách hàng khác nhau. Báo cáo sử dụng tỷ lệ phần trăm (\%) để đảm bảo tính công bằng:
+
+\begin{itemize}
+    \item \textbf{Hãng bị phàn nàn nhiều nhất:} \textbf{US Airways} đứng đầu với tỷ lệ tiêu cực lên tới \textbf{77.69\%}, tiếp theo là American (71.04\%) và United (68.89\%). 
+    \textit{(Lưu ý: Nếu xét về số lượng tuyệt đối, United nhận nhiều tweet chê bai nhất với 2,633 lượt).}
+    \item \textbf{Hãng được yêu thích nhất:} \textbf{Virgin America} giữ hình ảnh tốt nhất với tỷ lệ tiêu cực thấp nhất (35.91\%) và tỷ lệ tích cực cao nhất (30.16\%). Kế tiếp là Southwest và Delta.
+\end{itemize}
+
+\section{Phân tích Nguyên nhân Tiêu cực (Root Cause Analysis)}
+Phân tích lý do dẫn đến đánh giá tiêu cực (Negative Reasons) cho thấy các "điểm đau" (Pain points) cốt lõi:
+
+\begin{itemize}
+    \item \textbf{Vấn đề chung lớn nhất:} \textit{Dịch vụ khách hàng kém (Customer Service Issue)} là nguyên nhân số 1 gây phẫn nộ ở hầu hết các hãng (American, Southwest, US Airways, United, Virgin America).
+    \item \textbf{Các nguyên nhân kỹ thuật:} \textit{Chuyến bay bị trễ (Late Flight)} và \textit{Hủy chuyến (Cancelled Flight)} là các nguyên nhân phổ biến tiếp theo. Riêng đối với hãng \textbf{Delta}, "Late Flight" là nguyên nhân bị phàn nàn nhiều nhất, vượt qua cả Customer Service.
+    \item \textbf{Đặc thù hãng bay:} Virgin America dù ít bị phàn nàn nhất, nhưng vấn đề nổi cộm của họ lại nằm ở khâu đặt vé (\textit{Flight Booking Problems}).
+\end{itemize}
+
+\section{Phân tích Ngôn ngữ \& Từ khóa (NLP \& N-grams Analysis)}
+Mô hình Machine Learning (Logistic Regression \& Random Forest với TF-IDF/CountVectorizer) đạt độ chính xác khoảng \textbf{81.8\%}, bóc tách các từ khóa mang tính biểu tượng:
+
+\begin{itemize}
+    \item \textbf{Từ khóa kích hoạt rủi ro (Hate Drivers):} Các từ thể hiện sự thất vọng và chờ đợi như: \texttt{suck}, \texttt{worst}, \texttt{screw}, \texttt{terrible}, \texttt{unacceptable}, \texttt{ruin}, \texttt{delay}, \texttt{hour}, \texttt{stuck}, \texttt{rude}. Đặc biệt từ \texttt{hour} và \texttt{delay} có trọng số rất cao.
+    \item \textbf{Đặc trưng theo hãng:}
+    \begin{itemize}
+        \item \textbf{Southwest \& American:} Nhắc nhiều đến \texttt{bag}, \texttt{luggage}, \texttt{hold} (hành lý và giữ máy).
+        \item \textbf{Virgin America:} Liên quan đến \texttt{site}, \texttt{website}, \texttt{seat} (lỗi hệ thống web/chỗ ngồi).
+    \end{itemize}
+\end{itemize}
+
+\section{Phân tích Chuỗi thời gian (Time-Series \& Spike Detection)}
+Sử dụng thuật toán kiểm tra Z-score ($Z > 3$) để tìm kiếm các "đỉnh" (spikes) khủng hoảng truyền thông.
+
+\begin{quote}
+    \textbf{Kết quả:} Thuật toán ghi nhận \textit{"No strong z-score spikes found (z>3)"}. 
+\end{quote}
+Điều này cho thấy sự tiêu cực diễn ra đều đặn và liên tục hàng ngày, thay vì bùng phát do một sự kiện thảm họa cụ thể nào đó.
+
+\hr
+\section*{ \ding{110} Kết luận \& Đề xuất hành động}
+\begin{enumerate}
+    \item \textbf{Cải tổ bộ phận CSKH là ưu tiên số 1:} Do lỗi dịch vụ áp đảo lỗi kỹ thuật, các hãng (đặc biệt là US Airways và American) cần đào tạo lại thái độ nhân viên và tối ưu hóa thời gian phản hồi để chặn đứng các cụm từ như "hold", "hour".
+    \item \textbf{Hành động theo đặc thù thương hiệu:}
+    \begin{itemize}
+        \item \textbf{Virgin America:} Nâng cấp hệ thống Website và luồng đặt vé.
+        \item \textbf{Southwest \& American:} Rà soát quy trình quản lý Hành lý (Luggage/Baggage handling).
+        \item \textbf{Delta:} Tập trung giải quyết tỷ lệ trễ chuyến (Late Flight).
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
