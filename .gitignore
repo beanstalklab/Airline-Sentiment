@@ -1,3 +1,8 @@
 # draft/*
 airline_sentiment_analysis_notebook.ipynb
 data/Tweets_preprocessed.csv
+outputs/
+notebook_airline_sentiment_corrected.ipynb
+notebook_airline_sentiment_with_over_under_sampling.ipynb
+notebook_new.ipynb
+notebook.ipynb
