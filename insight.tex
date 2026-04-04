@@ -8,23 +8,60 @@
 
 \begin{document}
 
-\section{Tổng quan Dữ liệu (Executive Summary)}
-Bộ dữ liệu bao gồm \textbf{14,640} lượt tweet nhắc đến 6 hãng hàng không lớn tại Mỹ: United, US Airways, American, Southwest, Delta, và Virgin America. 
+\section*{TỔNG QUAN BỘ DỮ LIỆU (DATASET OVERVIEW)}
 
-Phân tích tổng thể cho thấy khách hàng trên Twitter có xu hướng phàn nàn nhiều hơn là khen ngợi. Tỷ lệ phân bổ cảm xúc như sau:
-\begin{itemize}
-    \item \textbf{Tiêu cực (Negative):} 9,178 tweets (~62.7\%)
-    \item \textbf{Trung lập (Neutral):} 3,099 tweets (~21.2\%)
-    \item \textbf{Tích cực (Positive):} 2,363 tweets (~16.1\%)
+\subsection{1. Thông tin chung}
+\begin{itemize}[label=--]
+    \item \textbf{Tên bộ dữ liệu:} Twitter Airline Sentiment Dataset (Dữ liệu đánh giá của khách hàng về các hãng hàng không trên nền tảng Twitter).
+    \item \textbf{Quy mô dữ liệu:} Bao gồm tổng cộng \textbf{14,640} bản ghi. Mỗi bản ghi đại diện cho một lượt tweet (bài đăng) của khách hàng.
+    \item \textbf{Mục tiêu phân tích:} Đo lường sức khỏe thương hiệu (Brand Sentiment), phân loại cảm xúc khách hàng và bóc tách các nguyên nhân cốt lõi dẫn đến sự không hài lòng đối với các dịch vụ hàng không.
 \end{itemize}
 
-\section{Xếp hạng Cảm xúc theo Thương hiệu (Brand Sentiment Ranking)}
-Việc nhìn vào số lượng tweet tuyệt đối có thể gây hiểu lầm do quy mô khách hàng khác nhau. Báo cáo sử dụng tỷ lệ phần trăm (\%) để đảm bảo tính công bằng:
+\subsection{2. Cấu trúc các biến số chính (Key Variables)}
+Dựa trên quá trình phân tích, bộ dữ liệu bao gồm các trường thông tin quan trọng sau:
+\begin{description}
+    \item[\texttt{tweet\_id}:] Mã định danh duy nhất cho mỗi bài đăng.
+    \item[\texttt{airline}:] Tên của hãng hàng không được nhắc đến (Biến phân loại).
+    \item[\texttt{airline\_sentiment}:] Nhãn cảm xúc, chia làm 3 lớp: \textit{Positive} (Tích cực), \textit{Neutral} (Trung lập), \textit{Negative} (Tiêu cực).
+    \item[\texttt{negativereason}:] Phân loại lý do cụ thể nếu tweet mang cảm xúc tiêu cực (ví dụ: Trễ chuyến, Dịch vụ khách hàng...).
+    \item[\texttt{text / text\_preprocessed}:] Nội dung văn bản gốc và nội dung đã qua xử lý ngôn ngữ tự nhiên (NLP).
+    \item[\texttt{tweet\_created}:] Dữ liệu chuỗi thời gian (Time-series) ghi nhận mốc thời gian đăng bài.
+    \item[\texttt{confidence}:] Chỉ số độ tin cậy của việc gán nhãn cảm xúc hoặc lý do tiêu cực.
+\end{description}
 
+\subsection{3. Đặc điểm phân phối dữ liệu (Data Distribution)}
+
+\subsubsection*{A. Khối lượng dữ liệu theo Hãng hàng không}
+Dữ liệu bao phủ 6 hãng hàng không lớn với sự phân bổ như sau:
+\begin{table}[h!]
+\centering
+\begin{tabular}{lrr}
+\toprule
+\textbf{Hãng hàng không} & \textbf{Số lượng Tweets} & \textbf{Tỷ trọng} \\ \midrule
+United           & 3,822 & Lớn nhất \\
+US Airways       & 2,913 & -- \\
+American         & 2,759 & -- \\
+Southwest        & 2,420 & -- \\
+Delta            & 2,222 & -- \\
+Virgin America   & 504   & Thấp nhất \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{B. Cơ cấu Cảm xúc (Sentiment Breakdown)}
+Bộ dữ liệu cho thấy sự mất cân bằng đặc trưng của ngành dịch vụ trên mạng xã hội:
 \begin{itemize}
-    \item \textbf{Hãng bị phàn nàn nhiều nhất:} \textbf{US Airways} đứng đầu với tỷ lệ tiêu cực lên tới \textbf{77.69\%}, tiếp theo là American (71.04\%) và United (68.89\%). 
-    \textit{(Lưu ý: Nếu xét về số lượng tuyệt đối, United nhận nhiều tweet chê bai nhất với 2,633 lượt).}
-    \item \textbf{Hãng được yêu thích nhất:} \textbf{Virgin America} giữ hình ảnh tốt nhất với tỷ lệ tiêu cực thấp nhất (35.91\%) và tỷ lệ tích cực cao nhất (30.16\%). Kế tiếp là Southwest và Delta.
+    \item \textcolor{red}{\textbf{Tiêu cực (Negative):}} 9,178 bài đăng (~62.7\%).
+    \item \textcolor{orange}{\textbf{Trung lập (Neutral):}} 3,099 bài đăng (~21.2\%).
+    \item \textcolor{green}{\textbf{Tích cực (Positive):}} 2,363 bài đăng (~16.1\%).
+\end{itemize}
+
+\subsubsection*{C. Các nguyên nhân tiêu cực phổ biến}
+Các "điểm đau" (Pain-points) chính của khách hàng bao gồm: \textit{Customer Service Issue} (Vấn đề dịch vụ), \textit{Late Flight} (Trễ chuyến), \textit{Cancelled Flight} (Hủy chuyến) và \textit{Flight Booking Problems} (Lỗi đặt vé).
+
+\subsection{4. Đánh giá tính khả dụng của bộ dữ liệu}
+\begin{itemize}
+    \item \textbf{Điểm mạnh:} Cấu trúc tốt cho bài toán phân loại (\textit{Text Classification}). Cột \texttt{negativereason} cho phép phân tích sâu nguyên nhân gốc rễ. Dữ liệu thời gian hỗ trợ tốt cho phân tích biến động (\textit{Spike analysis}).
+    \item \textbf{Thách thức:} Văn bản Twitter chứa nhiều từ lóng, viết tắt và lỗi chính tả, đòi hỏi quy trình tiền xử lý (\textit{Preprocessing}) nghiêm ngặt trước khi đưa vào các mô hình Machine Learning như Logistic Regression hay Random Forest.
 \end{itemize}
 
 \section{Phân tích Nguyên nhân Tiêu cực (Root Cause Analysis)}
